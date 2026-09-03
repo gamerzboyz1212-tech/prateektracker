@@ -141,9 +141,9 @@ const THEMES = {
     card: 'bg-[#152238] border border-[#1E3A5F] shadow-[0_4px_30px_rgba(0,0,0,0.5)] rounded-2xl',
     cardInner: 'bg-[#0B132B] border border-[#1E3A5F] hover:border-[#0096FE]/40 rounded-xl sm:rounded-2xl transition-all',
     textMain: 'text-slate-200', textMuted: 'text-slate-400', textAccent: 'text-[#0096FE]', textWarning: 'text-[#FFD900]',
-    input: 'bg-[#0B132B] border border-[#1E3A5F] text-slate-200 placeholder:text-slate-600 focus:border-[#0096FE] rounded-full px-4',
-    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-500 shadow-[0_0_15px_rgba(0,150,254,0.3)] rounded-full font-bold',
-    btnWarning: 'bg-[#1E3A5F] text-[#33AAFF] hover:bg-[#1E3A5F]/80 rounded-full font-bold',
+    input: 'bg-[#0B132B] border border-[#1E3A5F] text-slate-200 placeholder:text-slate-600 focus:border-[#0096FE] rounded-xl px-4',
+    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-500 shadow-[0_0_15px_rgba(0,150,254,0.3)] rounded-xl font-bold',
+    btnWarning: 'bg-[#1E3A5F] text-[#33AAFF] hover:bg-[#1E3A5F]/80 rounded-xl font-bold',
     fontHeading: 'font-bold tracking-normal', borderAccent: 'border-[#0096FE]', badge: 'bg-[#0B132B] text-slate-400 border border-[#1E3A5F] rounded-full'
   },
   doraemonLight: {
@@ -154,9 +154,9 @@ const THEMES = {
     card: 'bg-white border border-[#E2E8F0] shadow-xl rounded-2xl',
     cardInner: 'bg-slate-50 border border-[#E2E8F0] hover:border-[#0096FE]/40 rounded-xl sm:rounded-2xl transition-all',
     textMain: 'text-slate-800', textMuted: 'text-slate-500', textAccent: 'text-[#0096FE]', textWarning: 'text-[#FFD900]',
-    input: 'bg-slate-50 border border-[#E2E8F0] text-slate-800 placeholder:text-slate-400 focus:border-[#0096FE] rounded-full px-4',
-    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-600 shadow-md rounded-full font-bold',
-    btnWarning: 'bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full font-bold',
+    input: 'bg-slate-50 border border-[#E2E8F0] text-slate-800 placeholder:text-slate-400 focus:border-[#0096FE] rounded-xl px-4',
+    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-600 shadow-md rounded-xl font-bold',
+    btnWarning: 'bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-xl font-bold',
     fontHeading: 'font-bold tracking-normal', borderAccent: 'border-[#0096FE]', badge: 'bg-slate-100 text-slate-600 border border-slate-200 rounded-full'
   },
   cyber: {
@@ -180,9 +180,9 @@ const THEMES = {
     card: 'bg-white border-[3px] border-black shadow-[6px_6px_0px_#111] rounded-2xl',
     cardInner: 'bg-[#fff9c4] border-2 border-black hover:bg-[#ffeb3b] transition-all rounded-xl',
     textMain: 'text-black', textMuted: 'text-zinc-600', textAccent: 'text-[#ff0000]', textWarning: 'text-[#00a8ff]',
-    input: 'bg-white border-[3px] border-black text-black placeholder:text-zinc-500 focus:border-[#ff0000] rounded-full px-4',
-    btnPrimary: 'bg-[#00a8ff] text-white border-[3px] border-black hover:bg-[#008bcb] shadow-[4px_4px_0px_#111] active:translate-y-1 active:shadow-none rounded-full font-black',
-    btnWarning: 'bg-[#ffeb3b] text-black border-[3px] border-black hover:bg-[#fbc02d] rounded-full font-black shadow-[2px_2px_0px_#111]',
+    input: 'bg-white border-[3px] border-black text-black placeholder:text-zinc-500 focus:border-[#ff0000] rounded-xl px-4',
+    btnPrimary: 'bg-[#00a8ff] text-white border-[3px] border-black hover:bg-[#008bcb] shadow-[4px_4px_0px_#111] active:translate-y-1 active:shadow-none rounded-xl font-black',
+    btnWarning: 'bg-[#ffeb3b] text-black border-[3px] border-black hover:bg-[#fbc02d] rounded-xl font-black shadow-[2px_2px_0px_#111]',
     fontHeading: 'font-black tracking-wide uppercase', borderAccent: 'border-[#ff0000]', badge: 'bg-[#ffeb3b] text-black border-2 border-black font-black rounded-full'
   },
   squid: {
