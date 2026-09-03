@@ -2693,7 +2693,7 @@ export default function App() {
         </div>
       </div>
 
-      <div className={`p-4 md:p-8 relative pt-24 sm:pt-28 ${testMode ? 'mt-8 sm:mt-12' : ''}`}>
+      <div className={`p-4 md:p-8 relative pt-24 sm:pt-28 pb-28 sm:pb-24 ${testMode ? 'mt-8 sm:mt-12' : ''}`}>
         {toast && (
           <div className={`fixed top-28 sm:top-32 left-1/2 transform -translate-x-1/2 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-2xl shadow-black/40 z-[100] animate-bounce flex items-center gap-3 text-[10px] sm:text-sm uppercase tracking-widest ${t.badge} ${t.fontHeading} ${t.cardBorder}`}>
             <Check size={18} className={`sm:size-5 ${t.textAccent ? t.textAccent : 'text-current'}`} /> {toast}
@@ -2737,7 +2737,7 @@ export default function App() {
                   {!isNightShiftOpen ? (
                     <button onClick={() => setIsNightShiftOpen(true)} className={`px-5 sm:px-7 py-3 sm:py-4 flex items-center gap-2 sm:gap-3 text-xs sm:text-sm uppercase tracking-widest rounded-2xl tap-effect hover-lift transition-all shadow-2xl ${t.btnWarning} ${t.fontHeading}`}><Moon size={18} className="sm:size-5 stroke-[3]" /> PLAN TOMORROW</button>
                   ) : (
-                    <div className={`p-5 sm:p-7 w-[290px] sm:w-[330px] shadow-2xl shadow-black/40 rounded-3xl border-2 backdrop-blur-xl ${t.card} ${t.borderAccent}`}>
+                    <div className={`p-5 sm:p-7 w-[calc(100vw-32px)] max-w-[320px] shadow-2xl shadow-black/40 rounded-3xl border-2 backdrop-blur-xl ${t.card} ${t.borderAccent}`}>
                        <div className={`flex justify-between items-center mb-5 sm:mb-6 border-b pb-3 sm:pb-4 ${t.borderAccent} opacity-80`}>
                          <h3 className={`font-black text-[10px] sm:text-xs uppercase tracking-widest flex items-center gap-2 ${t.textAccent}`}><Moon size={14} className="sm:size-4 stroke-[3]"/> NIGHT SHIFT INBOX</h3>
                          <button onClick={() => setIsNightShiftOpen(false)} className={`transition-colors ${t.textMuted} hover:text-red-500 tap-effect`}><X size={16} className="sm:size-5 stroke-[3]"/></button>
@@ -2789,12 +2789,12 @@ export default function App() {
               )}
 
               {/* Second Brain Bottom Nav */}
-              <div className={`fixed bottom-0 left-0 w-full border-t-2 z-50 overflow-x-auto hide-scrollbar backdrop-blur-xl ${t.header} ${t.borderAccent}`}>
-                <div className="max-w-2xl mx-auto flex justify-between px-2 sm:px-3 py-2.5 sm:py-3 min-w-[320px]">
+              <div className={`fixed bottom-0 left-0 w-full border-t-2 z-50 overflow-hidden backdrop-blur-xl ${t.header} ${t.borderAccent}`}>
+                <div className="max-w-2xl mx-auto grid grid-cols-6 px-1 py-1.5 sm:py-2.5 pb-[calc(env(safe-area-inset-bottom,0px)+6px)]">
                   {[{ id: 'dashboard', icon: CalendarIcon, label: 'MISSION' }, { id: 'study', icon: Activity, label: 'QUEUE' }, { id: 'history', icon: History, label: 'HISTORY' }, { id: 'wisdom', icon: Folder, label: 'WISDOM' }, { id: 'vault', icon: BrainCircuit, label: 'DUMP' }, { id: 'urge', icon: ShieldAlert, label: 'URGE' }].map(tab => (
-                    <button key={tab.id} onClick={() => setBrainTab(tab.id)} className={`flex-1 flex flex-col items-center justify-center gap-1.5 sm:gap-2 p-2 sm:p-3 rounded-2xl transition-all duration-300 tap-effect ${brainTab === tab.id ? t.textAccent + ' bg-current/10 shadow-lg shadow-current/10' : t.textMuted + ' hover:' + t.textMain + ' hover:bg-current/5'}`}>
-                      <tab.icon size={20} className={`sm:size-[22px] ${brainTab === tab.id ? 'stroke-[2.5]' : 'stroke-2'}`} />
-                      <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest">{tab.label}</span>
+                    <button key={tab.id} onClick={() => setBrainTab(tab.id)} className={`flex flex-col items-center justify-center gap-0.5 sm:gap-1 py-1 px-0.5 rounded-xl transition-all duration-300 tap-effect ${brainTab === tab.id ? t.textAccent + ' bg-current/10 shadow-lg shadow-current/10' : t.textMuted + ' hover:' + t.textMain + ' hover:bg-current/5'}`}>
+                      <tab.icon size={18} className={`sm:size-[22px] ${brainTab === tab.id ? 'stroke-[2.5]' : 'stroke-2'}`} />
+                      <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-wider truncate max-w-full">{tab.label}</span>
                     </button>
                   ))}
                 </div>
