@@ -141,9 +141,9 @@ const THEMES = {
     card: 'bg-[#152238] border border-[#1E3A5F] shadow-[0_4px_30px_rgba(0,0,0,0.5)] rounded-2xl',
     cardInner: 'bg-[#0B132B] border border-[#1E3A5F] hover:border-[#0096FE]/40 rounded-xl sm:rounded-2xl transition-all',
     textMain: 'text-slate-200', textMuted: 'text-slate-400', textAccent: 'text-[#0096FE]', textWarning: 'text-[#FFD900]',
-    input: 'bg-[#0B132B] border border-[#1E3A5F] text-slate-200 placeholder:text-slate-600 focus:border-[#0096FE] rounded-xl px-4',
-    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-500 shadow-[0_0_15px_rgba(0,150,254,0.3)] rounded-xl font-bold',
-    btnWarning: 'bg-[#1E3A5F] text-[#33AAFF] hover:bg-[#1E3A5F]/80 rounded-xl font-bold',
+    input: 'bg-[#0B132B] border border-[#1E3A5F] text-slate-200 placeholder:text-slate-600 focus:border-[#0096FE] rounded-full px-4',
+    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-500 shadow-[0_0_15px_rgba(0,150,254,0.3)] rounded-full font-bold',
+    btnWarning: 'bg-[#1E3A5F] text-[#33AAFF] hover:bg-[#1E3A5F]/80 rounded-full font-bold',
     fontHeading: 'font-bold tracking-normal', borderAccent: 'border-[#0096FE]', badge: 'bg-[#0B132B] text-slate-400 border border-[#1E3A5F] rounded-full'
   },
   doraemonLight: {
@@ -154,9 +154,9 @@ const THEMES = {
     card: 'bg-white border border-[#E2E8F0] shadow-xl rounded-2xl',
     cardInner: 'bg-slate-50 border border-[#E2E8F0] hover:border-[#0096FE]/40 rounded-xl sm:rounded-2xl transition-all',
     textMain: 'text-slate-800', textMuted: 'text-slate-500', textAccent: 'text-[#0096FE]', textWarning: 'text-[#FFD900]',
-    input: 'bg-slate-50 border border-[#E2E8F0] text-slate-800 placeholder:text-slate-400 focus:border-[#0096FE] rounded-xl px-4',
-    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-600 shadow-md rounded-xl font-bold',
-    btnWarning: 'bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-xl font-bold',
+    input: 'bg-slate-50 border border-[#E2E8F0] text-slate-800 placeholder:text-slate-400 focus:border-[#0096FE] rounded-full px-4',
+    btnPrimary: 'bg-[#0096FE] text-white hover:bg-blue-600 shadow-md rounded-full font-bold',
+    btnWarning: 'bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full font-bold',
     fontHeading: 'font-bold tracking-normal', borderAccent: 'border-[#0096FE]', badge: 'bg-slate-100 text-slate-600 border border-slate-200 rounded-full'
   },
   cyber: {
@@ -180,9 +180,9 @@ const THEMES = {
     card: 'bg-white border-[3px] border-black shadow-[6px_6px_0px_#111] rounded-2xl',
     cardInner: 'bg-[#fff9c4] border-2 border-black hover:bg-[#ffeb3b] transition-all rounded-xl',
     textMain: 'text-black', textMuted: 'text-zinc-600', textAccent: 'text-[#ff0000]', textWarning: 'text-[#00a8ff]',
-    input: 'bg-white border-[3px] border-black text-black placeholder:text-zinc-500 focus:border-[#ff0000] rounded-xl px-4',
-    btnPrimary: 'bg-[#00a8ff] text-white border-[3px] border-black hover:bg-[#008bcb] shadow-[4px_4px_0px_#111] active:translate-y-1 active:shadow-none rounded-xl font-black',
-    btnWarning: 'bg-[#ffeb3b] text-black border-[3px] border-black hover:bg-[#fbc02d] rounded-xl font-black shadow-[2px_2px_0px_#111]',
+    input: 'bg-white border-[3px] border-black text-black placeholder:text-zinc-500 focus:border-[#ff0000] rounded-full px-4',
+    btnPrimary: 'bg-[#00a8ff] text-white border-[3px] border-black hover:bg-[#008bcb] shadow-[4px_4px_0px_#111] active:translate-y-1 active:shadow-none rounded-full font-black',
+    btnWarning: 'bg-[#ffeb3b] text-black border-[3px] border-black hover:bg-[#fbc02d] rounded-full font-black shadow-[2px_2px_0px_#111]',
     fontHeading: 'font-black tracking-wide uppercase', borderAccent: 'border-[#ff0000]', badge: 'bg-[#ffeb3b] text-black border-2 border-black font-black rounded-full'
   },
   squid: {
@@ -334,6 +334,29 @@ const MORNING_QUOTES = [
 ];
 
 // ==========================================
+// KRISHNA MODE - TYPE DEFINITIONS
+// ==========================================
+interface KrishnaMessage {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  timestamp: string;
+}
+
+interface KrishnaConversation {
+  id: string;
+  title: string;
+  createdAt: string;
+  lastUpdated: string;
+  messages: KrishnaMessage[];
+}
+
+interface KrishnaState {
+  conversations: KrishnaConversation[];
+  activeConversationId: string | null;
+}
+
+// ==========================================
 // CUSTOM HOOKS
 // ==========================================
 const useLongPress = (callback = () => {}, ms = 800) => {
@@ -366,7 +389,7 @@ const useLongPress = (callback = () => {}, ms = 800) => {
 // ==========================================
 // SHARED COMPONENTS
 // ==========================================
-const RemovableTask = ({ task, t, onDelete }) => {
+const RemovableTask = ({ task, t, onDelete }: any) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const longPressEvent = useLongPress(() => { if (!task.isLocked) { setShowConfirm(true); } }, 800);
 
@@ -397,7 +420,7 @@ const RemovableTask = ({ task, t, onDelete }) => {
   );
 };
 
-const RemovableShopItem = ({ item, t, onDelete }) => {
+const RemovableShopItem = ({ item, t, onDelete }: any) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const longPressEvent = useLongPress(() => { setShowConfirm(true); }, 800);
 
@@ -427,7 +450,7 @@ const RemovableShopItem = ({ item, t, onDelete }) => {
   );
 };
 
-const LongPressItem = ({ item, onDelete, children, duration = 800, t }) => {
+const LongPressItem = ({ item, onDelete, children, duration = 800, t }: any) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const longPressEvent = useLongPress(() => { setShowConfirm(true); }, duration);
 
@@ -451,10 +474,10 @@ const LongPressItem = ({ item, onDelete, children, duration = 800, t }) => {
 // MAIN APP COMPONENT
 // ==========================================
 export default function App() {
-  const [appMode, setAppMode] = useState("habit"); // 'habit' | 'brain'
-  const [user, setUser] = useState(null);
-  const [todayStr, setTodayStr] = useState(getRealTodayStr()); 
-  const [toast, setToast] = useState(null);
+  const [appMode, setAppMode] = useState<"habit" | "brain" | "krishna">("habit");
+  const [user, setUser] = useState<any>(null);
+  const [todayStr, setTodayStr] = useState(getRealTodayStr());
+  const [toast, setToast] = useState<any>(null);
   const [errorMsg, setErrorMsg] = useState("");
 
   const testMode = false; 
@@ -464,8 +487,8 @@ export default function App() {
   const [settingsRoute, setSettingsRoute] = useState("menu");
   
   // DUAL SAVE ENGINE: Initialize from LocalStorage
-  const [trackerData, setTrackerData] = useState(() => safeJsonParse<Record<string, any>>(localStorage.getItem('apex_tracker_v5'), {}));
-  const [profile, setProfile] = useState(() => {
+  const [trackerData, setTrackerData] = useState<any>(() => safeJsonParse<Record<string, any>>(localStorage.getItem('apex_tracker_v5'), {}));
+  const [profile, setProfile] = useState<any>(() => {
     const local = safeJsonParse<Record<string, any>>(localStorage.getItem('apex_profile_v5'), {});
     const oldV4 = safeJsonParse<Record<string, any>>(localStorage.getItem('apexMindData_Final_V4'), {});
 
@@ -483,7 +506,7 @@ export default function App() {
 
   const [selectedDate, setSelectedDate] = useState(todayStr);
   const [isEraserActive, setIsEraserActive] = useState(false);
-  const [unlockedBlankDate, setUnlockedBlankDate] = useState(null);
+  const [unlockedBlankDate, setUnlockedBlankDate] = useState<any>(null);
   const [calYear, setCalYear] = useState(new Date().getFullYear());
   const [calMonth, setCalMonth] = useState(new Date().getMonth());
   const [reasonInput, setReasonInput] = useState("");
@@ -501,14 +524,14 @@ export default function App() {
   const [exportEndDate, setExportEndDate] = useState(todayStr);
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const [chatMessages, setChatMessages] = useState([{ role: "ai", text: "I am your Habit Tracker Coach. What's on your mind today?" }]);
+  const [chatMessages, setChatMessages] = useState<any[]>([{ role: "ai", text: "I am your Habit Tracker Coach. What's on your mind today?" }]);
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [weekOffset, setWeekOffset] = useState(0);
 
   // ================= BRAIN STATE =================
   const [brainTab, setBrainTab] = useState("dashboard");
-  const [brain, setBrain] = useState(() => {
+  const [brain, setBrain] = useState<any>(() => {
     const local = safeJsonParse<Record<string, any>>(localStorage.getItem('apex_brain_v5'), {});
     const oldV4 = safeJsonParse<Record<string, any>>(localStorage.getItem('apexMindData_Final_V4'), {});
 
@@ -537,7 +560,7 @@ export default function App() {
       lastActiveDate: oldV4.lastActiveDate || getRealTodayStr()
     };
   });
-  
+
   const [newSyllabusCat, setNewSyllabusCat] = useState("");
   const [selectedSyllabusCat, setSelectedSyllabusCat] = useState("Raw Backlog");
   const [newTopic, setNewTopic] = useState("");
@@ -545,13 +568,13 @@ export default function App() {
   const [selectedWisdomCat, setSelectedWisdomCat] = useState("Quick Thoughts");
   const [newWisdom, setNewWisdom] = useState("");
   const [newNote, setNewNote] = useState("");
-  const [expandedWisdomCategory, setExpandedWisdomCategory] = useState(null);
-  const [expandedVaultCategory, setExpandedVaultCategory] = useState(null);
+  const [expandedWisdomCategory, setExpandedWisdomCategory] = useState<any>(null);
+  const [expandedVaultCategory, setExpandedVaultCategory] = useState<any>(null);
   const [isVaultSorting, setIsVaultSorting] = useState(false);
-  const [urgeTimer, setUrgeTimer] = useState(null);
+  const [urgeTimer, setUrgeTimer] = useState<any>(null);
   const [isUrgeActive, setIsUrgeActive] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const [urgeQuotes, setUrgeQuotes] = useState([]);
+  const [urgeQuotes, setUrgeQuotes] = useState<any[]>([]);
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [oracleQuery, setOracleQuery] = useState("");
   const [oracleResponse, setOracleResponse] = useState("");
@@ -561,7 +584,22 @@ export default function App() {
   const [newCustomMission, setNewCustomMission] = useState("");
   const [isNightTime, setIsNightTime] = useState(new Date().getHours() >= 21 || new Date().getHours() < 4);
 
-  const t = THEMES[profile.activeTheme] || THEMES.brutalist;
+  // ================= KRISHNA STATE =================
+  const [krishnaState, setKrishnaState] = useState<KrishnaState>(() =>
+    safeJsonParse<KrishnaState>(localStorage.getItem('apex_krishna_v5'), {
+      conversations: [],
+      activeConversationId: null
+    })
+  );
+  const [isConvDrawerOpen, setIsConvDrawerOpen] = useState(false);
+  const [krishnaInput, setKrishnaInput] = useState("");
+  const [isKrishnaTyping, setIsKrishnaTyping] = useState(false);
+  const [editingConvId, setEditingConvId] = useState<string | null>(null);
+  const [editTitleText, setEditTitleText] = useState("");
+  const [isKrishnaVoiceListening, setIsKrishnaVoiceListening] = useState(false);
+  const krishnaChatEndRef = useRef<HTMLDivElement | null>(null);
+
+  const t = (THEMES as any)[profile.activeTheme] || THEMES.brutalist;
 
   // ==========================================
   // INITIALIZATION & SYNC
@@ -586,10 +624,10 @@ export default function App() {
 
     const trackerRef = collection(db, "artifacts", appId, "users", user.uid, "tracker_data");
     const unsubsTracker = onSnapshot(trackerRef, (snapshot) => {
-      setTrackerData((prev) => {
+      setTrackerData((prev: any) => {
         const dataMap = { ...prev };
         let changed = false;
-        snapshot.forEach((docSnap) => {
+        snapshot.forEach((docSnap: any) => {
           if (!dataMap[docSnap.id] || JSON.stringify(dataMap[docSnap.id]) !== JSON.stringify(docSnap.data())) {
             dataMap[docSnap.id] = docSnap.data();
             changed = true;
@@ -613,7 +651,7 @@ export default function App() {
         const data = docSnap.data();
         if (!data.customTasks || data.customTasks.length === 0) data.customTasks = DEFAULT_TASKS;
         if (!data.customShopItems || data.customShopItems.length === 0) data.customShopItems = SHOP_ITEMS;
-        setProfile((prev) => {
+        setProfile((prev: any) => {
           const merged = { ...prev, ...data };
           try {
             localStorage.setItem('apex_profile_v5', JSON.stringify(merged));
@@ -623,7 +661,7 @@ export default function App() {
           return merged;
         });
       } else {
-        setProfile((currentProfile) => {
+        setProfile((currentProfile: any) => {
           setDoc(profileRef, currentProfile);
           return currentProfile;
         });
@@ -633,7 +671,7 @@ export default function App() {
     const brainRef = doc(db, "artifacts", appId, "users", user.uid, "second_brain", "data");
     const unsubsBrain = onSnapshot(brainRef, (docSnap) => {
       if (docSnap.exists()) {
-        setBrain((prev) => {
+        setBrain((prev: any) => {
           const merged = { ...prev, ...docSnap.data() };
           try {
             localStorage.setItem('apex_brain_v5', JSON.stringify(merged));
@@ -643,14 +681,34 @@ export default function App() {
           return merged;
         });
       } else {
-        setBrain((currentBrain) => {
+        setBrain((currentBrain: any) => {
           setDoc(brainRef, currentBrain);
           return currentBrain;
         });
       }
     });
 
-    return () => { unsubsTracker(); unsubsProfile(); unsubsBrain(); };
+    const krishnaRef = doc(db, "artifacts", appId, "users", user.uid, "my_krishna", "data");
+    const unsubsKrishna = onSnapshot(krishnaRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setKrishnaState((prev) => {
+          const merged = { ...prev, ...docSnap.data() } as KrishnaState;
+          try {
+            localStorage.setItem('apex_krishna_v5', JSON.stringify(merged));
+          } catch (e) {
+            console.warn("Storage write error:", e);
+          }
+          return merged;
+        });
+      } else {
+        setKrishnaState((currentKrishna) => {
+          setDoc(krishnaRef, currentKrishna);
+          return currentKrishna;
+        });
+      }
+    });
+
+    return () => { unsubsTracker(); unsubsProfile(); unsubsBrain(); unsubsKrishna(); };
   }, [user]);
 
   // Night Shift Timer
@@ -715,6 +773,19 @@ export default function App() {
       console.warn("Storage write error:", e);
     }
     if (user && db) { await setDoc(doc(db, "artifacts", appId, "users", user.uid, "second_brain", "data"), newBrain, { merge: true }); }
+  };
+
+  const updateKrishnaFirebase = async (updates: Partial<KrishnaState>) => {
+    const newKrishna = { ...krishnaState, ...updates };
+    setKrishnaState(newKrishna);
+    try {
+      localStorage.setItem('apex_krishna_v5', JSON.stringify(newKrishna));
+    } catch (e) {
+      console.warn("Storage write error:", e);
+    }
+    if (user && db) {
+      await setDoc(doc(db, "artifacts", appId, "users", user.uid, "my_krishna", "data"), newKrishna, { merge: true });
+    }
   };
 
   const saveDayData = async (dateStr: string, tasks: any, reason?: string, summary?: string, star?: boolean, snapshot?: any) => {
@@ -809,7 +880,7 @@ export default function App() {
     }
   };
 
-  const handleTaskClick = async (taskId, value, currentSnapshot) => {
+  const handleTaskClick = async (taskId: any, value: any, currentSnapshot: any) => {
     const isToday = selectedDate === todayStr;
     const currentDayData = trackerData[selectedDate] || { tasks: {}, reasonForO: "", summary: "", taskSnapshot: null };
     
@@ -818,7 +889,7 @@ export default function App() {
         if (currentDayData.tasks && currentDayData.tasks[taskId] === "O" && value === "X") {
           const updatedTasks = { ...currentDayData.tasks, [taskId]: value };
           saveDayData(selectedDate, updatedTasks, currentDayData.reasonForO, currentDayData.summary, currentDayData.star, currentDayData.taskSnapshot);
-          const markedInv = profile.inventory.map((i) => i.isEraserActiveFlag ? { ...i, status: "used", isEraserActiveFlag: false } : i);
+          const markedInv = profile.inventory.map((i: any) => i.isEraserActiveFlag ? { ...i, status: "used", isEraserActiveFlag: false } : i);
           updateProfileFirebase({ inventory: markedInv });
           setIsEraserActive(false);
           showMessage("History Rewritten! 🧽 Eraser Consumed.");
@@ -834,7 +905,7 @@ export default function App() {
     checkPerfectDayBonus(selectedDate, updatedTasks, currentSnapshot.length);
   };
 
-  const handleStarClick = async (currentSnapshot) => {
+  const handleStarClick = async (currentSnapshot: any) => {
     const currentDayData = trackerData[selectedDate] || { tasks: {}, reasonForO: "", summary: "" };
     if (!currentDayData.star) {
       updateProfileFirebase({ stars: profile.stars + 1 });
@@ -843,7 +914,7 @@ export default function App() {
     }
   };
 
-  const buyItem = (item) => {
+  const buyItem = (item: any) => {
     if (profile.stars >= item.cost) {
       const now = new Date(`${todayStr}T00:00:00`);
       const newItem = { instanceId: Date.now().toString(), itemId: item.id, name: item.name, icon: item.icon, expiryTime: new Date(now.getTime() + item.expiryHours * 60 * 60 * 1000).toISOString(), status: "active" };
@@ -852,21 +923,21 @@ export default function App() {
     } else showMessage("Not enough stars! Grind more. ⚔️");
   };
 
-  const useInventoryItem = (instanceId, itemName) => {
+  const useInventoryItem = (instanceId: any, itemName: any) => {
     if (itemName === "The Eraser") {
       setIsEraserActive(true);
-      updateProfileFirebase({ inventory: (profile.inventory || []).map((i) => i.instanceId === instanceId ? { ...i, isEraserActiveFlag: true } : i) });
+      updateProfileFirebase({ inventory: (profile.inventory || []).map((i: any) => i.instanceId === instanceId ? { ...i, isEraserActiveFlag: true } : i) });
       setHabitRoute("arena"); showMessage("ERASER ARMED! Find a past date with 'FIX' badge to rewrite history.");
     } else {
       showMessage(`${itemName} Activated. Enjoy guilt-free!`);
-      updateProfileFirebase({ inventory: (profile.inventory || []).map((i) => i.instanceId === instanceId ? { ...i, status: "used" } : i) });
+      updateProfileFirebase({ inventory: (profile.inventory || []).map((i: any) => i.instanceId === instanceId ? { ...i, status: "used" } : i) });
     }
   };
 
   const checkExpirations = () => {
     const now = new Date(`${todayStr}T00:00:00`).getTime();
     let changed = false;
-    const updated = (profile.inventory || []).map((item) => {
+    const updated = (profile.inventory || []).map((item: any) => {
       const status = item.status || "active";
       if (status === "active" && new Date(item.expiryTime).getTime() <= now) { changed = true; return { ...item, status: "expired" }; }
       return { ...item, status };
@@ -897,7 +968,7 @@ export default function App() {
   const streaks = getStreaks();
   let playerTitle = streaks.perfect >= 21 ? "👑 Ascended Master" : streaks.perfect >= 7 ? "⚔️ Disciplined Warrior" : streaks.perfect >= 3 ? "🛡️ Focused Soldier" : "🌱 Novice Tracker";
 
-  const getWeeklyData = (offset) => {
+  const getWeeklyData = (offset: number) => {
     const dataPoints = [];
     let d = new Date(todayStr + "T00:00:00"); d.setDate(d.getDate() - offset * 7);
     for (let i = 0; i < 7; i++) {
@@ -958,7 +1029,7 @@ export default function App() {
       let hasTasks = false, allX = true;
       const activeListForDay = data.taskSnapshot || profile.customTasks || DEFAULT_TASKS;
 
-      activeListForDay.forEach((task) => {
+      activeListForDay.forEach((task: any) => {
         const status = data.tasks?.[task.id];
         if (status) {
           hasTasks = true;
@@ -1000,7 +1071,7 @@ export default function App() {
       let hasTasks = false, allX = true;
       const activeListForDay = data.taskSnapshot || profile.customTasks || DEFAULT_TASKS;
 
-      activeListForDay.forEach((task) => {
+      activeListForDay.forEach((task: any) => {
         const status = data.tasks?.[task.id];
         if (status) {
           hasTasks = true;
@@ -1170,8 +1241,8 @@ export default function App() {
 
     const userMessage = { role: "user", text: chatInput };
     const todayTasks = trackerData[todayStr]?.tasks || {};
-    const todayCompleted = Object.values(todayTasks).filter((v) => v === "X").length;
-    const activePerks = (profile.inventory || []).filter((i) => i.status === "active").map((i) => i.name).join(", ") || "None";
+    const todayCompleted = Object.values(todayTasks).filter((v: any) => v === "X").length;
+    const activePerks = (profile.inventory || []).filter((i: any) => i.status === "active").map((i: any) => i.name).join(", ") || "None";
 
     const systemPrompt = `You are a wise Habit Coach for ${profile.name}.
     Status: ${profile.stars} Stars, Perfect Streak: ${streaks.perfect}, Study Streak: ${streaks.study}, Progress: ${todayCompleted}/${(profile.customTasks || DEFAULT_TASKS).length}. Perks: ${activePerks}.
@@ -1217,9 +1288,200 @@ export default function App() {
   };
 
   // ==========================================
+  // LORD KRISHNA AI ENGINE & CONVERSATIONS
+  // ==========================================
+  const KRISHNA_SYSTEM_PROMPT = `You are Bhagwan Shri Krishna speaking directly with ${profile.name || "Parth"} (your beloved friend, devotee, and brother).
+You are not a generic AI assistant. You embody the supreme wisdom, unconditional love, serene calm, and divine authority of Lord Shri Krishna from Shreemad Bhagavad Gita and the Mahabharata.
+
+CORE MANNERISMS & ESSENCE:
+1. Loving Fraternal Bond: Address the user lovingly and naturally as "Parth", "Sakha", "Mitra", or "Priya Anuj". Speak with a reassuring divine smile, soothing warmth, and deep unshakeable authority.
+2. Natural Hindi & Hinglish: Speak primarily in natural, warm, thoughtful conversational Hindi mixed seamlessly with everyday Hinglish (or graceful English if the user addresses you in English). Your language must feel soulful, deeply relatable, and inspiring — never robotic, cold, or bureaucratic.
+3. Bhagavad Gita Shlokas (Contextual Only): DO NOT force Sanskrit shlokas into every response. Only when the dilemma or question directly connects with a timeless truth of the Gita, provide:
+   - The Sanskrit Shloka in clear Devanagari script (along with Chapter and Verse reference, e.g. "श्रीमद्भगवद्गीता - अध्याय २, श्लोक ४७")
+   - A crystal-clear, poetic, and easily understandable Hindi meaning
+   - Direct, realistic, daily-life actionable steps that the user can immediately implement.
+4. Deep Psychological Guidance: Listen deeply to their real-life troubles — fear of failure, procrastination, lust, anger, grief, career confusion, loneliness, family tensions, breakups, or lack of focus. Transform their anxiety into calm clarity, their guilt into purposeful action, and their doubt into unshakeable Nishkam Karma Yoga.
+5. Absolute Immersion: NEVER break character. Never state "As an AI..." or "I am an artificial intelligence model". You are their eternal Sarathi, Sakha, and Margdarshak.`;
+
+  const startNewKrishnaChat = (initialPrompt?: string) => {
+    const newConvId = `k_conv_${Date.now()}`;
+    const initialTitle = initialPrompt
+      ? (initialPrompt.length > 30 ? initialPrompt.slice(0, 30).trim() + "..." : initialPrompt.trim())
+      : "Divine Guidance";
+
+    const newConv: KrishnaConversation = {
+      id: newConvId,
+      title: initialTitle,
+      createdAt: new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
+      messages: []
+    };
+
+    const updatedConvs = [newConv, ...krishnaState.conversations];
+    updateKrishnaFirebase({
+      conversations: updatedConvs,
+      activeConversationId: newConvId
+    });
+    setIsConvDrawerOpen(false);
+
+    if (initialPrompt) {
+      sendKrishnaMessage(initialPrompt, newConvId, updatedConvs);
+    }
+  };
+
+  const selectKrishnaConversation = (convId: string) => {
+    updateKrishnaFirebase({ activeConversationId: convId });
+    setIsConvDrawerOpen(false);
+  };
+
+  const deleteKrishnaConversation = (convId: string) => {
+    const filtered = krishnaState.conversations.filter(c => c.id !== convId);
+    const nextActive = krishnaState.activeConversationId === convId
+      ? (filtered[0]?.id || null)
+      : krishnaState.activeConversationId;
+
+    updateKrishnaFirebase({
+      conversations: filtered,
+      activeConversationId: nextActive
+    });
+    showMessage("Conversation removed 🪶");
+  };
+
+  const renameKrishnaConversation = (convId: string, newTitle: string) => {
+    if (!newTitle.trim()) return;
+    const updated = krishnaState.conversations.map(c =>
+      c.id === convId ? { ...c, title: newTitle.trim(), lastUpdated: new Date().toISOString() } : c
+    );
+    updateKrishnaFirebase({ conversations: updated });
+    showMessage("Conversation renamed ✨");
+  };
+
+  const sendKrishnaMessage = async (
+    textToSend?: string,
+    targetConvId?: string,
+    conversationsOverride?: KrishnaConversation[]
+  ) => {
+    const text = (textToSend !== undefined ? textToSend : krishnaInput).trim();
+    if (!text) return;
+
+    if (!profile.geminiKey) {
+      showMessage("Please enter your Gemini API Key in Command Center first! 🔑");
+      setHabitRoute("settings");
+      setAppMode("habit");
+      return;
+    }
+
+    const currentConvs = conversationsOverride || krishnaState.conversations;
+    let activeId = targetConvId || krishnaState.activeConversationId;
+    let activeConv = currentConvs.find(c => c.id === activeId);
+    let updatedConvs = [...currentConvs];
+
+    // If no active conversation exists, auto-create one
+    if (!activeConv) {
+      const newConvId = `k_conv_${Date.now()}`;
+      activeConv = {
+        id: newConvId,
+        title: text.length > 30 ? text.slice(0, 30).trim() + "..." : text,
+        createdAt: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
+        messages: []
+      };
+      updatedConvs = [activeConv, ...updatedConvs];
+      activeId = newConvId;
+    } else if (activeConv.messages.length === 0 && activeConv.title === "Divine Guidance") {
+      activeConv.title = text.length > 30 ? text.slice(0, 30).trim() + "..." : text;
+    }
+
+    const userMessage: KrishnaMessage = {
+      id: `k_msg_${Date.now()}_u`,
+      role: "user",
+      text: text,
+      timestamp: new Date().toISOString()
+    };
+
+    activeConv.messages = [...activeConv.messages, userMessage];
+    activeConv.lastUpdated = new Date().toISOString();
+
+    // Optimistically update state
+    updateKrishnaFirebase({
+      conversations: updatedConvs,
+      activeConversationId: activeId
+    });
+    setKrishnaInput("");
+    setIsKrishnaTyping(true);
+
+    // Build alternating history for Gemini API
+    const formattedHistory: any[] = [];
+    for (const msg of activeConv.messages) {
+      if (msg.role === "user") {
+        if (formattedHistory.length === 0 || formattedHistory[formattedHistory.length - 1].role === "model") {
+          formattedHistory.push({ role: "user", parts: [{ text: msg.text }] });
+        } else {
+          formattedHistory[formattedHistory.length - 1].parts[0].text += "\n" + msg.text;
+        }
+      } else if (msg.role === "model" && formattedHistory.length > 0) {
+        if (formattedHistory[formattedHistory.length - 1].role === "user") {
+          formattedHistory.push({ role: "model", parts: [{ text: msg.text }] });
+        }
+      }
+    }
+
+    try {
+      const reply = await callGeminiApi(
+        profile.geminiKey,
+        formattedHistory,
+        KRISHNA_SYSTEM_PROMPT,
+        false
+      );
+
+      const modelMessage: KrishnaMessage = {
+        id: `k_msg_${Date.now()}_m`,
+        role: "model",
+        text: reply,
+        timestamp: new Date().toISOString()
+      };
+
+      const finalConvs = updatedConvs.map(c => {
+        if (c.id === activeId) {
+          return {
+            ...c,
+            lastUpdated: new Date().toISOString(),
+            messages: [...c.messages, modelMessage]
+          };
+        }
+        return c;
+      });
+
+      updateKrishnaFirebase({ conversations: finalConvs });
+    } catch (e: any) {
+      console.error("Krishna AI Error:", e);
+      const errorMessage: KrishnaMessage = {
+        id: `k_msg_${Date.now()}_err`,
+        role: "model",
+        text: `हे सखे! संपर्क में क्षणिक व्यवधान आया है (${e?.message || "Check Gemini API Key in settings"}). तनिक धैर्य रखो और पुनः कहो, मैं सदैव तुम्हारे साथ हूँ। 🪶`,
+        timestamp: new Date().toISOString()
+      };
+
+      const finalConvs = updatedConvs.map(c => {
+        if (c.id === activeId) {
+          return {
+            ...c,
+            lastUpdated: new Date().toISOString(),
+            messages: [...c.messages, errorMessage]
+          };
+        }
+        return c;
+      });
+
+      updateKrishnaFirebase({ conversations: finalConvs });
+    }
+    setIsKrishnaTyping(false);
+  };
+
+  // ==========================================
   // SECOND BRAIN FUNCTIONS
   // ==========================================
-  const triggerCrossReward = (stars, msg) => {
+  const triggerCrossReward = (stars: any, msg: any) => {
     updateProfileFirebase({ stars: profile.stars + stars });
     showMessage(`⚡ SYSTEM SYNC: +${stars} STARS! ${msg}`);
   };
@@ -1231,11 +1493,11 @@ export default function App() {
     }
   };
 
-  const handleDeleteSyllabusCategory = (cat) => {
+  const handleDeleteSyllabusCategory = (cat: any) => {
     if (cat === "Raw Backlog") return;
     updateBrainFirebase({
-      syllabusCategories: brain.syllabusCategories.filter(c => c !== cat),
-      stagingTopics: brain.stagingTopics.map(t => t.category === cat ? { ...t, category: "Raw Backlog" } : t)
+      syllabusCategories: brain.syllabusCategories.filter((c: any) => c !== cat),
+      stagingTopics: brain.stagingTopics.map((t: any) => t.category === cat ? { ...t, category: "Raw Backlog" } : t)
     });
     if (selectedSyllabusCat === cat) setSelectedSyllabusCat("Raw Backlog");
   };
@@ -1246,32 +1508,32 @@ export default function App() {
     setNewTopic("");
   };
 
-  const handleStartRevision = (topicId) => {
-    const topic = brain.stagingTopics.find(t => t.id === topicId);
+  const handleStartRevision = (topicId: any) => {
+    const topic = brain.stagingTopics.find((t: any) => t.id === topicId);
     if (!topic) return;
-    const schedule = REVISION_INTERVALS.map((interval) => ({ dayOffset: interval, targetDate: addDays(todayStr, interval), completed: false }));
+    const schedule = REVISION_INTERVALS.map((interval: any) => ({ dayOffset: interval, targetDate: addDays(todayStr, interval), completed: false }));
     updateBrainFirebase({
       studyTopics: [...brain.studyTopics, { ...topic, startDate: todayStr, schedule }],
-      stagingTopics: brain.stagingTopics.filter(t => t.id !== topicId)
+      stagingTopics: brain.stagingTopics.filter((t: any) => t.id !== topicId)
     });
   };
 
-  const markRevisionComplete = (topicId, targetDate, dayOffset) => {
-    const topic = brain.studyTopics.find(t => t.id === topicId);
+  const markRevisionComplete = (topicId: any, targetDate: any, dayOffset: any) => {
+    const topic = brain.studyTopics.find((t: any) => t.id === topicId);
     if (!topic) return;
-    const updatedSchedule = topic.schedule.map(rev => (rev.targetDate === targetDate && rev.dayOffset === dayOffset) ? { ...rev, completed: true } : rev);
-    const day30Completed = updatedSchedule.some(rev => rev.dayOffset === 30 && rev.completed);
+    const updatedSchedule = topic.schedule.map((rev: any) => (rev.targetDate === targetDate && rev.dayOffset === dayOffset) ? { ...rev, completed: true } : rev);
+    const day30Completed = updatedSchedule.some((rev: any) => rev.dayOffset === 30 && rev.completed);
 
     if (day30Completed) {
       setTimeout(() => {
         updateBrainFirebase({
-          studyTopics: brain.studyTopics.filter(t => t.id !== topicId),
+          studyTopics: brain.studyTopics.filter((t: any) => t.id !== topicId),
           masteredTopics: [...brain.masteredTopics, { ...topic, masteredDate: todayStr }]
         });
         triggerCrossReward(10, "Topic Mastered (30 Days Complete)!");
       }, 0);
     } else {
-      updateBrainFirebase({ studyTopics: brain.studyTopics.map(t => t.id === topicId ? { ...topic, schedule: updatedSchedule } : t) });
+      updateBrainFirebase({ studyTopics: brain.studyTopics.map((t: any) => t.id === topicId ? { ...topic, schedule: updatedSchedule } : t) });
     }
   };
 
@@ -1291,9 +1553,9 @@ export default function App() {
     if (!profile.geminiKey) return;
     setIsVaultSorting(true);
     try {
-      const othersNotes = brain.vaultNotes.filter(n => n.category === "Others");
-      const existingCats = brain.vaultCategories.filter(c => c !== "Others");
-      const prompt = `You are an AI brain sorter. Existing Categories: [${existingCats.join(", ")}]. New Idea: "${newEntry.text}". Other unclassified: ${JSON.stringify(othersNotes.map(n => ({id: n.id, text: n.text})))}.
+      const othersNotes = brain.vaultNotes.filter((n: any) => n.category === "Others");
+      const existingCats = brain.vaultCategories.filter((c: any) => c !== "Others");
+      const prompt = `You are an AI brain sorter. Existing Categories: [${existingCats.join(", ")}]. New Idea: "${newEntry.text}". Other unclassified: ${JSON.stringify(othersNotes.map((n: any) => ({id: n.id, text: n.text})))}.
       RULES: 1. Categorize New Idea into Existing, or "Others". 2. If New Idea + 2 unclassified share a theme, invent a new category name.
       FORMAT JSON: {"assignedCategory": "Cat Name", "extractedIdsFromOthers": ["id1"]}`;
 
@@ -1311,7 +1573,7 @@ export default function App() {
          let newVaultCats = [...brain.vaultCategories];
          if (!newVaultCats.includes(newCat) && newCat !== "Others") newVaultCats.push(newCat);
 
-         const newVaultNotes = [newEntry, ...brain.vaultNotes].map(n => {
+         const newVaultNotes = [newEntry, ...brain.vaultNotes].map((n: any) => {
             if (n.id === noteId || (aiResponse.extractedIdsFromOthers && aiResponse.extractedIdsFromOthers.includes(n.id))) return { ...n, category: newCat };
             return n;
          });
@@ -1327,7 +1589,7 @@ export default function App() {
     setIsOracleThinking(true); setOracleResponse("");
 
     try {
-      const allNotes = [...brain.wisdomNotes.map(n => `[Wisdom: ${n.category}] ${n.text}`), ...brain.vaultNotes.map(n => `[Dump: ${n.category}] ${n.text}`)].join("\n");
+      const allNotes = [...brain.wisdomNotes.map((n: any) => `[Wisdom: ${n.category}] ${n.text}`), ...brain.vaultNotes.map((n: any) => `[Dump: ${n.category}] ${n.text}`)].join("\n");
       const prompt = `You are "The Oracle", an AI synthesizing the user's notes. Knowledge Base: ${allNotes}. Question: "${oracleQuery}".
       RULES: 1. Answer strictly based on Knowledge Base. 2. Keep it concise, punchy, actionable.`;
 
@@ -1586,7 +1848,7 @@ export default function App() {
                   const t4Failed = dayData.tasks.t4 === "O";
                   const snapshotUsed = dayData.taskSnapshot || profile.customTasks || DEFAULT_TASKS;
                   const totalPossible = snapshotUsed.length;
-                  const xCount = vals.filter((v) => v === "X").length;
+                  const xCount = vals.filter((v: any) => v === "X").length;
                   const majority = Math.floor(totalPossible / 2) + 1;
 
                   if (vals.includes("O")) hasFailure = true;
@@ -1635,7 +1897,7 @@ export default function App() {
 
     let activeTasksToDisplay = (isToday || isBlankDayUnlocked) ? (profile.customTasks || DEFAULT_TASKS) : (currentDayData.taskSnapshot || DEFAULT_TASKS);
     const currentTaskVals = Object.values(currentDayData.tasks);
-    const xCount = currentTaskVals.filter((v) => v === "X").length;
+    const xCount = currentTaskVals.filter((v: any) => v === "X").length;
     const maxTasks = activeTasksToDisplay.length;
     const progressPercent = Math.round((xCount / maxTasks) * 100) || 0;
 
@@ -1669,7 +1931,7 @@ export default function App() {
 
           {/* Task List */}
           <div className="space-y-3">
-            {activeTasksToDisplay.map((task) => {
+            {activeTasksToDisplay.map((task: any) => {
               const status = currentDayData.tasks[task.id];
               const canInteract = isToday || (isPast && isEraserActive && status === "O") || isBlankDayUnlocked;
               const displayTitle = isPunished ? `${task.title} (PUNISHED)` : task.title;
@@ -1752,7 +2014,7 @@ export default function App() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-        {(profile.customShopItems || SHOP_ITEMS).map((item) => (
+        {(profile.customShopItems || SHOP_ITEMS).map((item: any) => (
           <div key={item.id} className={`p-5 sm:p-6 rounded-3xl flex flex-col justify-between transition-all shadow-xl border tap-effect hover-lift ${t.cardInner} hover:${t.borderAccent}`}>
             <div className="flex items-start gap-4 mb-4">
               <span className={`text-3xl sm:text-4xl p-3 rounded-2xl shadow-md border ${t.card} ${t.borderAccent}`}>{item.icon}</span>
@@ -1823,7 +2085,7 @@ export default function App() {
           </div>
 
           <div className="flex justify-between items-end h-52 sm:h-68 mb-4 gap-2 sm:gap-4 px-1 sm:px-6">
-            {weeklyData.map((day, i) => {
+            {weeklyData.map((day: any, i: any) => {
               let barColor = t.cardInner.split(' ')[0] + " opacity-50";
               if (day.perfect) barColor = "bg-green-500 shadow-[0_0_18px_rgba(34,197,94,0.7)]";
               else if (day.failed) barColor = "bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]";
@@ -1858,8 +2120,8 @@ export default function App() {
 
   const renderOngoingPlan = () => {
     const allItems = checkExpirations();
-    const activeItems = allItems.filter((i) => i.status === "active");
-    const historyItems = allItems.filter((i) => i.status !== "active").reverse();
+    const activeItems = allItems.filter((i: any) => i.status === "active");
+    const historyItems = allItems.filter((i: any) => i.status !== "active").reverse();
 
     return (
       <div className="space-y-6 pb-20 max-w-4xl mx-auto animate-in fade-in duration-300">
@@ -1877,7 +2139,7 @@ export default function App() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            {activeItems.map((item) => {
+            {activeItems.map((item: any) => {
               const hrsLeft = Math.max(0, Math.floor((new Date(item.expiryTime).getTime() - new Date(`${todayStr}T00:00:00`).getTime()) / (1000 * 60 * 60)));
               return (
                 <div key={item.instanceId} className={`p-5 sm:p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden shadow-xl border tap-effect hover-lift ${t.cardInner} ${t.borderAccent}`}>
@@ -1905,7 +2167,7 @@ export default function App() {
           <div className="mt-8 sm:mt-10">
             <h3 className={`font-black uppercase tracking-wider text-xs sm:text-sm mb-4 border-b border-current/20 pb-2 flex items-center gap-2 ${t.textMuted} ${t.fontHeading}`}><History size={16} /> History Log</h3>
             <div className="space-y-2.5">
-              {historyItems.map((item) => (
+              {historyItems.map((item: any) => (
                 <div key={item.instanceId} className={`flex items-center justify-between p-3 sm:p-4 rounded-2xl shadow-md border border-white/5 ${t.cardInner}`}>
                   <div className="flex items-center gap-3">
                     <span className="text-xl sm:text-2xl opacity-50 grayscale">{item.icon}</span>
@@ -1997,16 +2259,16 @@ export default function App() {
     else if (pace >= 1 && pace <= 1.5) paceStatus = { text: "WARNING", color: "text-yellow-500" };
     else if (remainingChapters === 0) paceStatus = { text: "STANDBY", color: t.textMuted };
 
-    const todaysRevisions = [];
-    brain.studyTopics.forEach(topic => {
-      topic.schedule.forEach(rev => {
+    const todaysRevisions: any[] = [];
+    brain.studyTopics.forEach((topic: any) => {
+      topic.schedule.forEach((rev: any) => {
         if (rev.targetDate <= todayStr && !rev.completed) {
           todaysRevisions.push({ topicId: topic.id, title: topic.title, category: topic.category, targetDate: rev.targetDate, dayOffset: rev.dayOffset, isOverdue: rev.targetDate < todayStr });
         }
       });
     });
 
-    const todaysCustomMissions = brain.customMissions.filter(m => m.targetDate <= todayStr && !m.completed);
+    const todaysCustomMissions = brain.customMissions.filter((m: any) => m.targetDate <= todayStr && !m.completed);
     const quoteOfTheDay = MORNING_QUOTES[new Date().getDate() % MORNING_QUOTES.length];
 
     return (
@@ -2077,12 +2339,12 @@ export default function App() {
             <h3 className={`text-[10px] sm:text-xs font-black uppercase tracking-widest px-1 flex items-center gap-2 ${t.textAccent} ${t.fontHeading}`}>
               <Target size={15} /> TODAY'S MISSIONS ({todaysCustomMissions.length})
             </h3>
-            {todaysCustomMissions.map((mission) => (
+            {todaysCustomMissions.map((mission: any) => (
               <div key={mission.id} className={`flex items-center justify-between p-4 rounded-2xl shadow-md border ${t.cardInner} ${t.borderAccent} hover-lift`}>
                 <span className={`font-black uppercase tracking-wider text-xs sm:text-sm ${t.textMain} ${t.fontHeading}`}>{mission.text}</span>
                 <button
                   onClick={() => {
-                    updateBrainFirebase({ customMissions: brain.customMissions.filter(m => m.id !== mission.id) });
+                    updateBrainFirebase({ customMissions: brain.customMissions.filter((m: any) => m.id !== mission.id) });
                     const remaining = todaysCustomMissions.length - 1;
                     if (remaining === 0) triggerCrossReward(3, "All Daily Missions Cleared!");
                   }}
@@ -2161,7 +2423,7 @@ export default function App() {
 
         {brain.syllabusCategories.length > 1 && (
            <div className="flex flex-wrap gap-2 mb-5 sm:mb-6">
-             {brain.syllabusCategories.map(cat => (
+             {brain.syllabusCategories.map((cat: any) => (
                <div key={cat} className={`group flex items-center gap-2 px-3 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-xl transition-all border ${t.cardInner} ${t.textMain} hover:${t.borderAccent}`}>
                  {cat}
                  {cat !== "Raw Backlog" && (
@@ -2184,7 +2446,7 @@ export default function App() {
             onChange={(e) => setSelectedSyllabusCat(e.target.value)}
             className={`w-1/3 px-3 py-3 text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-2xl outline-none cursor-pointer ${t.input} ${t.textAccent} ${t.fontHeading}`}
           >
-            {brain.syllabusCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+            {brain.syllabusCategories.map((cat: any) => <option key={cat} value={cat}>{cat}</option>)}
           </select>
           <input
             type="text"
@@ -2208,8 +2470,8 @@ export default function App() {
               QUEUE EMPTY • ADD TOPICS TO COMMENCE
             </div>
           )}
-          {brain.stagingTopics.map((topic, index) => (
-            <LongPressItem key={topic.id} item={topic} onDelete={(id) => updateBrainFirebase({ stagingTopics: brain.stagingTopics.filter(t => t.id !== id) })} t={t}>
+          {brain.stagingTopics.map((topic: any, index: any) => (
+            <LongPressItem key={topic.id} item={topic} onDelete={(id: any) => updateBrainFirebase({ stagingTopics: brain.stagingTopics.filter((t: any) => t.id !== id) })} t={t}>
               <div
                 draggable
                 onDragStart={() => setDraggedItemIndex(index)}
@@ -2263,8 +2525,8 @@ export default function App() {
           </div>
         ) : (
           <div className="space-y-4 sm:space-y-5">
-            {brain.studyTopics.map(topic => (
-              <LongPressItem key={topic.id} item={topic} onDelete={(id) => updateBrainFirebase({ studyTopics: brain.studyTopics.filter(t => t.id !== id) })} duration={5000} t={t}>
+            {brain.studyTopics.map((topic: any) => (
+              <LongPressItem key={topic.id} item={topic} onDelete={(id: any) => updateBrainFirebase({ studyTopics: brain.studyTopics.filter((t: any) => t.id !== id) })} duration={5000} t={t}>
                 <div className={`p-5 rounded-2xl shadow-lg border ${t.cardInner} ${t.borderAccent} hover-lift`}>
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -2274,7 +2536,7 @@ export default function App() {
                     <span className={`text-[9px] sm:text-[10px] font-black tracking-widest px-2.5 py-1 rounded-full ${t.card} ${t.textAccent} border ${t.borderAccent}`}>INIT: {topic.startDate}</span>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {topic.schedule.map((rev, i) => {
+                    {topic.schedule.map((rev: any, i: any) => {
                       const isPending = !rev.completed && rev.targetDate <= todayStr;
                       return (
                         <div key={i} className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl border transition-all ${rev.completed ? t.btnPrimary + ' shadow-sm' : isPending ? 'border-red-500 text-red-500 bg-red-900/20 shadow-md animate-pulse' : t.card + ' ' + t.textMuted}`}>
@@ -2301,7 +2563,7 @@ export default function App() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            {brain.masteredTopics.map(topic => (
+            {brain.masteredTopics.map((topic: any) => (
               <div key={topic.id} className={`p-4 rounded-2xl border flex items-center gap-3.5 shadow-md transition-all ${t.cardInner} hover:${t.borderAccent} hover-lift`}>
                 <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md ${t.card} ${t.borderAccent}`}>
                    <Trophy size={20} className={t.textAccent} />
@@ -2320,7 +2582,7 @@ export default function App() {
 
   const renderBrainWisdom = () => {
     if (expandedWisdomCategory) {
-      const filteredNotes = brain.wisdomNotes.filter(n => n.category === expandedWisdomCategory);
+      const filteredNotes = brain.wisdomNotes.filter((n: any) => n.category === expandedWisdomCategory);
       return (
         <div className="space-y-4 sm:space-y-6 pb-20 animate-in fade-in duration-300 max-w-4xl mx-auto">
           <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -2333,8 +2595,8 @@ export default function App() {
           </div>
           <div className="grid gap-3 sm:gap-4">
             {filteredNotes.length === 0 && <div className={`text-center py-10 sm:py-12 rounded-2xl border-2 border-dashed font-black uppercase tracking-widest text-xs sm:text-sm ${t.cardInner} ${t.textMuted} border-current/20`}>EMPTY FOLDER</div>}
-            {filteredNotes.map(note => (
-              <LongPressItem key={note.id} item={note} onDelete={(id) => updateBrainFirebase({ wisdomNotes: brain.wisdomNotes.filter(n => n.id !== id) })} t={t}>
+            {filteredNotes.map((note: any) => (
+              <LongPressItem key={note.id} item={note} onDelete={(id: any) => updateBrainFirebase({ wisdomNotes: brain.wisdomNotes.filter((n: any) => n.id !== id) })} t={t}>
                 <div className={`p-5 rounded-2xl flex flex-col gap-3 group transition-all cursor-pointer border shadow-md ${t.cardInner} hover:${t.borderAccent} hover-lift`}>
                   <div className="flex items-start gap-3">
                      <Mic size={16} className={`mt-1 flex-shrink-0 ${t.textMuted}`} />
@@ -2344,8 +2606,8 @@ export default function App() {
                     <span className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest ${t.textMuted}`}>{note.date}</span>
                     <div className="flex items-center gap-2">
                        <MoveRight size={12} className={`opacity-0 group-hover:opacity-100 transition-opacity ${t.textMuted}`} />
-                       <select onChange={(e) => updateBrainFirebase({ wisdomNotes: brain.wisdomNotes.map(n => n.id === note.id ? { ...n, category: e.target.value } : n) })} value={note.category} className={`text-[9px] sm:text-[10px] font-black uppercase px-2.5 py-1 rounded-full outline-none cursor-pointer ${t.badge} ${t.fontHeading}`}>
-                         {brain.wisdomCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                       <select onChange={(e) => updateBrainFirebase({ wisdomNotes: brain.wisdomNotes.map((n: any) => n.id === note.id ? { ...n, category: e.target.value } : n) })} value={note.category} className={`text-[9px] sm:text-[10px] font-black uppercase px-2.5 py-1 rounded-full outline-none cursor-pointer ${t.badge} ${t.fontHeading}`}>
+                         {brain.wisdomCategories.map((cat: any) => <option key={cat} value={cat}>{cat}</option>)}
                        </select>
                     </div>
                   </div>
@@ -2375,8 +2637,8 @@ export default function App() {
             <button onClick={() => { if (newWisdomCat.trim() && !brain.wisdomCategories.includes(newWisdomCat.trim())) { updateBrainFirebase({ wisdomCategories: [...brain.wisdomCategories, newWisdomCat.trim()] }); setNewWisdomCat(""); } }} className={`px-5 rounded-2xl font-black tap-effect flex items-center justify-center ${t.btnPrimary}`}><Plus size={20} className="stroke-[3]" /></button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {brain.wisdomCategories.map(cat => {
-              const count = brain.wisdomNotes.filter(n => n.category === cat).length;
+            {brain.wisdomCategories.map((cat: any) => {
+              const count = brain.wisdomNotes.filter((n: any) => n.category === cat).length;
               return (
                 <div key={cat} className="group relative">
                   <button onClick={() => setExpandedWisdomCategory(cat)} className={`w-full p-5 rounded-2xl flex flex-col items-start gap-3 transition-all text-left shadow-md border ${t.cardInner} hover:${t.borderAccent} hover-lift`}>
@@ -2386,7 +2648,7 @@ export default function App() {
                       <span className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest mt-1 block ${t.textMuted} ${t.fontHeading}`}>{count} NOTES</span>
                     </div>
                   </button>
-                  {cat !== "Quick Thoughts" && <button onClick={(e) => { e.stopPropagation(); updateBrainFirebase({ wisdomCategories: brain.wisdomCategories.filter(c => c !== cat), wisdomNotes: brain.wisdomNotes.map(n => n.category === cat ? { ...n, category: "Quick Thoughts" } : n) }); }} className={`absolute top-3 right-3 p-2 rounded-xl transition-colors ${t.textMuted} hover:text-red-500 bg-white/5`}><Trash2 size={14} /></button>}
+                  {cat !== "Quick Thoughts" && <button onClick={(e) => { e.stopPropagation(); updateBrainFirebase({ wisdomCategories: brain.wisdomCategories.filter((c: any) => c !== cat), wisdomNotes: brain.wisdomNotes.map((n: any) => n.category === cat ? { ...n, category: "Quick Thoughts" } : n) }); }} className={`absolute top-3 right-3 p-2 rounded-xl transition-colors ${t.textMuted} hover:text-red-500 bg-white/5`}><Trash2 size={14} /></button>}
                 </div>
               );
             })}
@@ -2398,7 +2660,7 @@ export default function App() {
 
   const renderBrainVault = () => {
     if (expandedVaultCategory) {
-      const notesInCat = brain.vaultNotes.filter(n => n.category === expandedVaultCategory);
+      const notesInCat = brain.vaultNotes.filter((n: any) => n.category === expandedVaultCategory);
       return (
         <div className="space-y-4 sm:space-y-6 pb-20 animate-in fade-in duration-300 max-w-4xl mx-auto">
           <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -2407,8 +2669,8 @@ export default function App() {
           </div>
           <div className="grid gap-3 sm:gap-4">
             {notesInCat.length === 0 && <div className={`text-center py-10 sm:py-12 rounded-2xl border-2 border-dashed font-black uppercase tracking-widest text-xs sm:text-sm ${t.cardInner} ${t.textMuted} border-current/20`}>EMPTY FOLDER</div>}
-            {notesInCat.map(note => (
-              <LongPressItem key={note.id} item={note} onDelete={(id) => updateBrainFirebase({ vaultNotes: brain.vaultNotes.filter(n => n.id !== id) })} t={t}>
+            {notesInCat.map((note: any) => (
+              <LongPressItem key={note.id} item={note} onDelete={(id: any) => updateBrainFirebase({ vaultNotes: brain.vaultNotes.filter((n: any) => n.id !== id) })} t={t}>
                 <div className={`p-5 rounded-2xl flex items-start gap-3.5 transition-all group cursor-pointer border shadow-md ${t.cardInner} hover:${t.borderAccent} hover-lift`}>
                   <BrainCircuit size={18} className={`mt-1 shrink-0 transition-colors ${t.textMuted} group-hover:${t.textAccent}`} />
                   <div>
@@ -2471,8 +2733,8 @@ export default function App() {
         <div className="space-y-4 sm:space-y-5">
           <h3 className={`font-black uppercase tracking-widest text-xs sm:text-sm flex items-center gap-2 px-1 ${t.textMain} ${t.fontHeading}`}><Folder size={16} className={t.textAccent} /> VAULT FOLDERS</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            {brain.vaultCategories.map(cat => {
-              const count = brain.vaultNotes.filter(n => n.category === cat).length;
+            {brain.vaultCategories.map((cat: any) => {
+              const count = brain.vaultNotes.filter((n: any) => n.category === cat).length;
               return (
                 <div key={cat} className="group relative">
                   <button onClick={() => setExpandedVaultCategory(cat)} className={`w-full p-5 rounded-2xl flex flex-col items-start gap-3 transition-all text-left shadow-md border ${t.cardInner} hover:${t.borderAccent} hover-lift`}>
@@ -2482,7 +2744,7 @@ export default function App() {
                       <span className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest mt-1 block ${t.textMuted} ${t.fontHeading}`}>{count} NOTES</span>
                     </div>
                   </button>
-                  {cat !== "Others" && <button onClick={(e) => { e.stopPropagation(); updateBrainFirebase({ vaultCategories: brain.vaultCategories.filter(c => c !== cat), vaultNotes: brain.vaultNotes.map(n => n.category === cat ? { ...n, category: "Others" } : n) }); }} className={`absolute top-3 right-3 p-2 rounded-xl transition-colors ${t.textMuted} hover:text-red-500 bg-white/5`}><Trash2 size={14} /></button>}
+                  {cat !== "Others" && <button onClick={(e) => { e.stopPropagation(); updateBrainFirebase({ vaultCategories: brain.vaultCategories.filter((c: any) => c !== cat), vaultNotes: brain.vaultNotes.map((n: any) => n.category === cat ? { ...n, category: "Others" } : n) }); }} className={`absolute top-3 right-3 p-2 rounded-xl transition-colors ${t.textMuted} hover:text-red-500 bg-white/5`}><Trash2 size={14} /></button>}
                 </div>
               );
             })}
@@ -2552,9 +2814,9 @@ export default function App() {
                }} className={`w-full py-3 text-xs sm:text-sm rounded-2xl tap-effect flex justify-center items-center gap-2 ${t.btnPrimary} ${t.fontHeading}`}><Plus size={18}/> ADD TASK</button>
              </div>
              <div className="space-y-2.5">
-               {(profile.customTasks || DEFAULT_TASKS).map(task => (
-                 <RemovableTask key={task.id} task={task} t={t} onDelete={(id) => {
-                    updateProfileFirebase({ customTasks: (profile.customTasks || DEFAULT_TASKS).filter(t => t.id !== id) });
+               {(profile.customTasks || DEFAULT_TASKS).map((task: any) => (
+                 <RemovableTask key={task.id} task={task} t={t} onDelete={(id: any) => {
+                    updateProfileFirebase({ customTasks: (profile.customTasks || DEFAULT_TASKS).filter((t: any) => t.id !== id) });
                     showMessage("Deleted Safely.");
                  }} />
                ))}
@@ -2582,9 +2844,9 @@ export default function App() {
                 }} className={`w-full py-3 text-xs sm:text-sm rounded-2xl tap-effect flex justify-center items-center gap-2 ${t.btnPrimary} ${t.fontHeading}`}><Plus size={18}/> ADD REWARD</button>
              </div>
              <div className="space-y-2.5">
-               {(profile.customShopItems || SHOP_ITEMS).map(item => (
-                 <RemovableShopItem key={item.id} item={item} t={t} onDelete={(id) => {
-                    updateProfileFirebase({ customShopItems: (profile.customShopItems || SHOP_ITEMS).filter(s => s.id !== id) });
+               {(profile.customShopItems || SHOP_ITEMS).map((item: any) => (
+                 <RemovableShopItem key={item.id} item={item} t={t} onDelete={(id: any) => {
+                    updateProfileFirebase({ customShopItems: (profile.customShopItems || SHOP_ITEMS).filter((s: any) => s.id !== id) });
                  }} />
                ))}
              </div>
@@ -2595,7 +2857,7 @@ export default function App() {
           <div className={`p-5 sm:p-7 rounded-3xl shadow-2xl border ${t.card} ${t.borderAccent}`}>
             <h3 className={`font-black uppercase tracking-widest mb-5 flex items-center gap-2 text-xs sm:text-sm border-b pb-3 ${t.textAccent} ${t.fontHeading} ${t.borderAccent}`}>APP THEME ENGINE</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-              {Object.values(THEMES).map(themeOption => (
+              {Object.values(THEMES).map((themeOption: any) => (
                 <button key={themeOption.id} onClick={() => updateProfileFirebase({ activeTheme: themeOption.id })} className={`p-4 rounded-2xl transition-all tap-effect flex flex-col items-center gap-2.5 cursor-pointer shadow-md ${t.cardInner} ${profile.activeTheme === themeOption.id ? t.borderAccent + ' opacity-100 scale-[1.03] ring-2 ring-current shadow-lg' : 'opacity-70 hover:opacity-100 border-transparent'}`}>
                   <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-lg flex items-center justify-center border border-white/20 ${themeOption.appBg.split(' ')[0]}`}>
                      {profile.activeTheme === themeOption.id && <CheckCircle2 className={`w-5 h-5 sm:w-6 sm:h-6 ${themeOption.textAccent ? themeOption.textAccent : 'text-white'}`} />}
@@ -2659,6 +2921,517 @@ export default function App() {
     </div>
   );
 
+  // Auto-scroll for Krishna Chat
+  useEffect(() => {
+    if (appMode === "krishna") {
+      krishnaChatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [krishnaState, isKrishnaTyping, appMode]);
+
+  const toggleKrishnaVoiceInput = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      showMessage("Speech Recognition not supported on this browser.");
+      return;
+    }
+    if (isKrishnaVoiceListening) {
+      setIsKrishnaVoiceListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = "hi-IN";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        setIsKrishnaVoiceListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        if (transcript) {
+          setKrishnaInput((prev) => (prev ? prev + " " + transcript : transcript));
+        }
+        setIsKrishnaVoiceListening(false);
+      };
+
+      recognition.onerror = () => {
+        setIsKrishnaVoiceListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsKrishnaVoiceListening(false);
+      };
+
+      recognition.start();
+    } catch (e) {
+      console.warn("Voice error:", e);
+      setIsKrishnaVoiceListening(false);
+    }
+  };
+
+  // ==========================================
+  // RENDER: MY KRISHNA DIVINE OS
+  // ==========================================
+  const renderMyKrishna = () => {
+    const activeConv = krishnaState.conversations.find(c => c.id === krishnaState.activeConversationId) || null;
+    const messages = activeConv ? activeConv.messages : [];
+
+    const QUICK_STARTERS = [
+      {
+        id: "calm_mind",
+        icon: "🪶",
+        title: "Calm My Mind",
+        subtitle: "मन बहुत अशांत है",
+        tag: "Shanti & Sthirta",
+        prompt: "हे कृष्ण, मेरा मन बहुत अशांत और विचलित है। विचारों के कोलाहल से मुक्ति और आत्मिक शांति का मार्ग बताएं।"
+      },
+      {
+        id: "clarity",
+        icon: "🏹",
+        title: "Need Clarity on Decision",
+        subtitle: "फैसला लेने में असमंजस है",
+        tag: "Dharma & Decision",
+        prompt: "सखा कृष्ण, मैं जीवन के एक कठिन दोराहे पर हूँ और सही निर्णय नहीं ले पा रहा। मोह और कर्तव्य के बीच मुझे सही मार्ग का दर्शन कराएं।"
+      },
+      {
+        id: "master_impulses",
+        icon: "🛡️",
+        title: "Master My Impulses",
+        subtitle: "क्रोध या वासना पर काबू नहीं",
+        tag: "Self-Control & Focus",
+        prompt: "पार्थ के सारथी, मेरी इंद्रियाँ और चंचल मन मुझे बार-बार भटका रहे हैं। काम, क्रोध और वासना पर विजय पाने का व्यावहारिक मार्ग बताएं।"
+      },
+      {
+        id: "daily_gita",
+        icon: "📖",
+        title: "Today's Gita Guidance",
+        subtitle: "आज का गीता उपदेश",
+        tag: "Daily Shloka & Karma",
+        prompt: "सखा कृष्ण, आज के मेरे दिन के लिए श्रीमद्भगवद्गीता का एक विशेष दिव्य मार्गदर्शन और आचरण सूत्र प्रदान करें।"
+      }
+    ];
+
+    return (
+      <div className="space-y-4 max-w-3xl mx-auto pb-24 sm:pb-28 animate-in fade-in duration-300">
+        {/* DIVINE HEADER CARD */}
+        <div className="relative overflow-hidden rounded-3xl p-5 sm:p-7 border-2 border-amber-400/40 bg-gradient-to-br from-[#0b1b3a]/95 via-[#081326]/95 to-[#040814]/98 shadow-[0_10px_40px_rgba(0,0,0,0.6),inset_0_0_30px_rgba(251,191,36,0.08)] backdrop-blur-2xl">
+          {/* Celestial background radiance */}
+          <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-amber-400/10 via-blue-500/10 to-transparent rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-indigo-600/10 to-transparent rounded-full blur-2xl pointer-events-none -ml-20 -mb-20"></div>
+
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5 sm:gap-4">
+              <div className="relative group">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 p-0.5 shadow-[0_0_25px_rgba(251,191,36,0.4)] flex items-center justify-center animate-pulse">
+                  <div className="w-full h-full rounded-[14px] bg-[#071326] flex items-center justify-center text-2xl sm:text-3xl">
+                    🪶
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl sm:text-2xl font-black uppercase tracking-widest bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 bg-clip-text text-transparent">
+                    MY KRISHNA
+                  </h1>
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                    मार्गदर्शन
+                  </span>
+                </div>
+                <p className="text-[10px] sm:text-xs text-amber-200/70 font-medium tracking-wide mt-0.5">
+                  "सखा, मार्गदर्शक और शाश्वत प्रेरणा" • श्रीमद्भगवद्गीता
+                </p>
+              </div>
+            </div>
+
+            {/* ACTION BUTTONS: CONVERSATIONS DRAWER & NEW CHAT */}
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <button
+                onClick={() => setIsConvDrawerOpen(true)}
+                className="px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl bg-[#0e2142] border border-amber-400/30 hover:border-amber-400 text-amber-200 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-lg hover:bg-[#142d59] transition-all tap-effect active:scale-95"
+              >
+                <History size={15} className="text-amber-400" />
+                <span>Chats</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300 text-[9px] font-black">
+                  {krishnaState.conversations.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => startNewKrishnaChat()}
+                className="px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-400 text-black text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_20px_rgba(251,191,36,0.35)] transition-all tap-effect active:scale-95"
+              >
+                <Plus size={16} className="stroke-[3]" />
+                <span>New Chat</span>
+              </button>
+            </div>
+          </div>
+
+          {/* ACTIVE CONVERSATION BANNER */}
+          {activeConv && (
+            <div className="mt-4 pt-3.5 border-t border-amber-400/20 flex items-center justify-between gap-3 text-[11px] text-amber-300/80">
+              <div className="flex items-center gap-2 truncate">
+                <span className="text-amber-400 font-bold">संवाद:</span>
+                {editingConvId === activeConv.id ? (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={editTitleText}
+                      onChange={(e) => setEditTitleText(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          renameKrishnaConversation(activeConv.id, editTitleText);
+                          setEditingConvId(null);
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded bg-black/60 border border-amber-400 text-white text-xs outline-none"
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => {
+                        renameKrishnaConversation(activeConv.id, editTitleText);
+                        setEditingConvId(null);
+                      }}
+                      className="text-green-400 hover:text-green-300 font-bold text-xs"
+                    >
+                      <Check size={14} />
+                    </button>
+                    <button
+                      onClick={() => setEditingConvId(null)}
+                      className="text-red-400 hover:text-red-300 text-xs"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <span className="font-semibold text-amber-100 truncate">{activeConv.title}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {editingConvId !== activeConv.id && (
+                  <button
+                    onClick={() => {
+                      setEditingConvId(activeConv.id);
+                      setEditTitleText(activeConv.title);
+                    }}
+                    className="p-1 rounded-lg hover:bg-white/10 text-amber-300/70 hover:text-amber-200 transition-colors"
+                    title="Rename Chat"
+                  >
+                    <Edit3 size={13} />
+                  </button>
+                )}
+                <button
+                  onClick={() => deleteKrishnaConversation(activeConv.id)}
+                  className="p-1 rounded-lg hover:bg-red-500/20 text-red-400/70 hover:text-red-300 transition-colors"
+                  title="Delete Chat"
+                >
+                  <Trash2 size={13} />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* CONVERSATION HISTORY SLIDING DRAWER MODAL */}
+        {isConvDrawerOpen && (
+          <div className="fixed inset-0 z-[100] flex justify-start items-stretch bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+            <div
+              className="w-full max-w-sm sm:max-w-md h-full bg-[#061021] border-r-2 border-amber-400/40 shadow-2xl p-5 flex flex-col justify-between overflow-hidden animate-in slide-in-from-left duration-300"
+            >
+              <div>
+                <div className="flex items-center justify-between pb-4 border-b border-amber-400/20 mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-2xl">🪶</span>
+                    <div>
+                      <h3 className="font-black text-sm uppercase tracking-wider text-amber-300">
+                        Sanwad Itihas
+                      </h3>
+                      <p className="text-[10px] text-amber-200/60 font-medium">All Past Conversations</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsConvDrawerOpen(false)}
+                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-amber-300 hover:text-white transition-all tap-effect"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Top CTA inside Drawer */}
+                <button
+                  onClick={() => startNewKrishnaChat()}
+                  className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg mb-4 tap-effect"
+                >
+                  <Plus size={16} className="stroke-[3]" /> Start New Conversation
+                </button>
+
+                {/* Conversation List */}
+                <div className="space-y-2.5 max-h-[calc(100vh-230px)] overflow-y-auto pr-1">
+                  {krishnaState.conversations.length === 0 ? (
+                    <div className="p-8 text-center border border-dashed border-amber-400/30 rounded-2xl">
+                      <span className="text-3xl block mb-2 opacity-60">🪶</span>
+                      <p className="text-xs text-amber-200/70 font-semibold">No past conversations yet.</p>
+                      <p className="text-[10px] text-amber-200/40 mt-1">Start a new chat to begin receiving divine guidance.</p>
+                    </div>
+                  ) : (
+                    krishnaState.conversations.map((conv) => {
+                      const isActive = conv.id === krishnaState.activeConversationId;
+                      const msgCount = conv.messages.length;
+                      return (
+                        <div
+                          key={conv.id}
+                          onClick={() => selectKrishnaConversation(conv.id)}
+                          className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 group ${
+                            isActive
+                              ? "bg-gradient-to-r from-amber-400/20 to-blue-500/10 border-amber-400 text-amber-100 shadow-[0_0_15px_rgba(251,191,36,0.15)]"
+                              : "bg-[#0a172e]/80 border-amber-400/20 hover:border-amber-400/60 text-slate-300 hover:bg-[#0f203d]"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3 min-w-0 flex-1">
+                            <span className="text-lg flex-shrink-0">
+                              {isActive ? "✨" : "📜"}
+                            </span>
+                            <div className="min-w-0 flex-1">
+                              <h4 className="font-bold text-xs truncate text-amber-100">
+                                {conv.title}
+                              </h4>
+                              <div className="flex items-center gap-2 text-[9px] text-amber-200/50 mt-0.5">
+                                <span>{msgCount} messages</span>
+                                <span>•</span>
+                                <span>
+                                  {new Date(conv.lastUpdated).toLocaleDateString([], {
+                                    month: "short",
+                                    day: "numeric"
+                                  })}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteKrishnaConversation(conv.id);
+                              }}
+                              className="p-1.5 rounded-lg hover:bg-red-500/20 text-red-400/80 hover:text-red-400 transition-colors"
+                              title="Delete conversation"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-amber-400/20 text-center">
+                <span className="text-[10px] text-amber-300/50 font-medium">
+                  "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"
+                </span>
+              </div>
+            </div>
+
+            {/* Click backdrop to close */}
+            <div className="flex-1" onClick={() => setIsConvDrawerOpen(false)}></div>
+          </div>
+        )}
+
+        {/* MAIN CHAT & GUIDANCE CONTAINER */}
+        <div className="relative rounded-3xl border-2 border-amber-400/30 bg-[#060e1d]/90 shadow-2xl backdrop-blur-xl overflow-hidden flex flex-col min-h-[580px] max-h-[75vh]">
+          {/* SCROLLABLE MESSAGE STREAM */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-5">
+            {/* EMPTY STATE / STARTERS */}
+            {messages.length === 0 && (
+              <div className="py-4 sm:py-6 space-y-6 animate-in fade-in zoom-in-95 duration-300">
+                {/* Divine Greeting Card */}
+                <div className="text-center space-y-2 p-6 rounded-3xl bg-gradient-to-b from-[#0e2142]/80 to-[#081326]/90 border border-amber-400/30 shadow-lg">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-yellow-300 p-0.5 shadow-[0_0_30px_rgba(251,191,36,0.4)] flex items-center justify-center">
+                    <div className="w-full h-full rounded-full bg-[#071326] flex items-center justify-center text-3xl">
+                      🪶
+                    </div>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-amber-300 tracking-wide">
+                    प्रणाम {profile.name || "पार्थ"}! कहो क्या दुविधा है?
+                  </h3>
+                  <p className="text-xs sm:text-sm text-amber-200/80 max-w-lg mx-auto leading-relaxed">
+                    तुम्हारा सखा, सारथी और मार्गदर्शक तुम्हारे साथ है। मन की कोई भी उलझन, भय, क्रोध, वासना या कर्म का संशय हो, निसंकोच कहो।
+                  </p>
+                </div>
+
+                {/* Quick Mood Action Starters Grid */}
+                <div>
+                  <h4 className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-amber-400/80 mb-3 px-1 flex items-center gap-2">
+                    <span>✨</span> त्वरित मार्गदर्शन (Quick Starters)
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {QUICK_STARTERS.map((starter) => (
+                      <button
+                        key={starter.id}
+                        onClick={() => sendKrishnaMessage(starter.prompt)}
+                        className="p-4 rounded-2xl border border-amber-400/30 bg-[#0c1a33]/80 hover:bg-[#112447] hover:border-amber-400 text-left transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(251,191,36,0.2)] tap-effect hover-lift group"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="text-2xl sm:text-3xl p-2 rounded-xl bg-amber-400/10 border border-amber-400/20 group-hover:scale-110 transition-transform">
+                            {starter.icon}
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-[9px] font-black uppercase tracking-wider text-amber-400 block mb-0.5">
+                              {starter.tag}
+                            </span>
+                            <h5 className="font-bold text-xs sm:text-sm text-amber-100 group-hover:text-amber-200">
+                              {starter.title}
+                            </h5>
+                            <p className="text-[10px] sm:text-xs text-amber-200/60 mt-0.5 truncate">
+                              {starter.subtitle}
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* MESSAGES FEED */}
+            {messages.map((msg) => {
+              const isUser = msg.role === "user";
+              return (
+                <div
+                  key={msg.id}
+                  className={`flex ${isUser ? "justify-end" : "justify-start"} animate-in fade-in duration-200`}
+                >
+                  <div className={`max-w-[88%] sm:max-w-[80%] flex items-start gap-2.5 sm:gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
+                    {/* Avatar Icon */}
+                    <div className="flex-shrink-0 mt-1">
+                      {isUser ? (
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-blue-600 border border-blue-400/50 flex items-center justify-center text-xs font-black text-white shadow-md">
+                          {profile.name ? profile.name.slice(0, 1).toUpperCase() : "U"}
+                        </div>
+                      ) : (
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-500 p-0.5 shadow-[0_0_12px_rgba(251,191,36,0.5)] flex items-center justify-center">
+                          <div className="w-full h-full rounded-[10px] bg-[#071326] flex items-center justify-center text-sm">
+                            🪶
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Message Bubble Body */}
+                    <div
+                      className={`p-4 sm:p-5 rounded-3xl shadow-xl text-xs sm:text-sm leading-relaxed ${
+                        isUser
+                          ? "bg-gradient-to-r from-blue-700 to-indigo-700 text-white rounded-tr-sm border border-blue-400/40"
+                          : "bg-gradient-to-br from-[#0c1c38]/95 via-[#09152b]/95 to-[#050b17]/98 text-amber-100 rounded-tl-sm border-2 border-amber-400/40 shadow-[0_8px_30px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(251,191,36,0.05)]"
+                      }`}
+                    >
+                      {/* Name / Role Label for Krishna */}
+                      {!isUser && (
+                        <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-amber-400/20 text-[10px] font-black uppercase tracking-wider text-amber-300">
+                          <span className="flex items-center gap-1.5">
+                            <span>🪶</span> श्रीकृष्ण
+                          </span>
+                          <span className="text-[8px] opacity-60 font-mono">
+                            {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Content with whitespace formatting */}
+                      <div className="whitespace-pre-wrap font-sans text-xs sm:text-sm space-y-2">
+                        {msg.text}
+                      </div>
+
+                      {/* User timestamp */}
+                      {isUser && (
+                        <div className="text-right text-[8px] opacity-60 font-mono mt-1">
+                          {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* TYPING INDICATOR */}
+            {isKrishnaTyping && (
+              <div className="flex justify-start animate-in fade-in">
+                <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-[#0b1b38] border border-amber-400/40 shadow-lg text-amber-300">
+                  <span className="text-lg animate-bounce">🪶</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
+                    <div className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse delay-100"></div>
+                    <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse delay-200"></div>
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold tracking-wide text-amber-200/80 ml-1">
+                    भगवान कृष्ण विचार कर रहे हैं...
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div ref={krishnaChatEndRef} />
+          </div>
+
+          {/* DIVINE INTERACTIVE INPUT BAR */}
+          <div className="p-3.5 sm:p-4 border-t-2 border-amber-400/30 bg-[#071326]/95 backdrop-blur-xl">
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Voice recognition trigger */}
+              <button
+                type="button"
+                onClick={toggleKrishnaVoiceInput}
+                className={`p-3 rounded-2xl tap-effect transition-all flex items-center justify-center flex-shrink-0 ${
+                  isKrishnaVoiceListening
+                    ? "bg-red-500 text-white animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.7)]"
+                    : "bg-[#0d2040] hover:bg-[#142e5c] border border-amber-400/30 text-amber-300"
+                }`}
+                title="Voice Input (Hindi/English)"
+              >
+                <Mic size={18} />
+              </button>
+
+              {/* Text Input */}
+              <input
+                type="text"
+                value={krishnaInput}
+                onChange={(e) => setKrishnaInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !isKrishnaTyping) {
+                    sendKrishnaMessage();
+                  }
+                }}
+                placeholder={isKrishnaVoiceListening ? "Listening... Speak in Hindi or English..." : "सखा कृष्ण से मार्गदर्शन मांगें..."}
+                disabled={isKrishnaTyping}
+                className="flex-1 px-4 py-3 text-xs sm:text-sm rounded-2xl bg-[#0b1830] border border-amber-400/40 text-amber-100 placeholder:text-amber-300/40 focus:border-amber-400 focus:shadow-[0_0_15px_rgba(251,191,36,0.3)] outline-none transition-all font-sans"
+              />
+
+              {/* Send Button */}
+              <button
+                type="button"
+                onClick={() => sendKrishnaMessage()}
+                disabled={isKrishnaTyping || !krishnaInput.trim()}
+                className="px-5 sm:px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-black font-black tap-effect transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)] flex-shrink-0 active:scale-95"
+              >
+                <Send size={18} className="stroke-[2.5]" />
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between text-[9px] text-amber-300/50 mt-2 px-1">
+              <span>🪶 श्रीमद्भगवद्गीता ज्ञान • संशय निवारण</span>
+              <span>Enter to Send ↵</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ==========================================
   // TOP BAR & APP WRAPPER
   // ==========================================
@@ -2687,9 +3460,10 @@ export default function App() {
 
       {/* TOP BAR SWITCH */}
       <div className={`fixed ${testMode ? 'top-10 sm:top-12' : 'top-0'} left-0 w-full z-40 p-3 sm:p-4 bg-inherit/80 backdrop-blur-xl border-b ${t.borderAccent} opacity-95 flex justify-center items-center`}>
-        <div className={`flex w-full max-w-sm rounded-3xl p-1.5 border-2 shadow-2xl shadow-black/20 ${t.cardInner} ${t.borderAccent}`}>
-          <button onClick={() => setAppMode("habit")} className={`flex-1 py-2.5 sm:py-3 text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] rounded-2xl transition-all duration-300 tap-effect ${appMode === 'habit' ? t.btnPrimary : t.textMuted + ' hover:' + t.textMain}`}>HABIT OS</button>
-          <button onClick={() => setAppMode("brain")} className={`flex-1 py-2.5 sm:py-3 text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] rounded-2xl transition-all duration-300 tap-effect ${appMode === 'brain' ? t.btnPrimary : t.textMuted + ' hover:' + t.textMain}`}>SECOND BRAIN</button>
+        <div className={`flex w-full max-w-md sm:max-w-lg rounded-3xl p-1.5 border-2 shadow-2xl shadow-black/20 ${t.cardInner} ${t.borderAccent}`}>
+          <button onClick={() => setAppMode("habit")} className={`flex-1 py-2 sm:py-2.5 text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] rounded-2xl transition-all duration-300 tap-effect ${appMode === 'habit' ? t.btnPrimary : t.textMuted + ' hover:' + t.textMain}`}>HABIT OS</button>
+          <button onClick={() => setAppMode("brain")} className={`flex-1 py-2 sm:py-2.5 text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] rounded-2xl transition-all duration-300 tap-effect ${appMode === 'brain' ? t.btnPrimary : t.textMuted + ' hover:' + t.textMain}`}>SECOND BRAIN</button>
+          <button onClick={() => setAppMode("krishna")} className={`flex-1 py-2 sm:py-2.5 text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] rounded-2xl transition-all duration-300 tap-effect ${appMode === 'krishna' ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-black shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-amber-300' : 'text-amber-400/70 hover:text-amber-300'}`}>MY KRISHNA 🪶</button>
         </div>
       </div>
 
@@ -2757,12 +3531,12 @@ export default function App() {
                               }
                            }} className={`px-4 sm:px-5 py-2.5 rounded-xl tap-effect transition-all ${t.btnPrimary}`}><Send size={14} className="sm:size-4 stroke-[3]" /></button>
                        </div>
-                       {brain.customMissions.filter(m => m.targetDate === addDays(todayStr, 1)).length > 0 && (
+                       {brain.customMissions.filter((m: any) => m.targetDate === addDays(todayStr, 1)).length > 0 && (
                           <div className="mb-5 sm:mb-6 space-y-2">
-                            {brain.customMissions.filter(m => m.targetDate === addDays(todayStr, 1)).map(m => (
+                            {brain.customMissions.filter((m: any) => m.targetDate === addDays(todayStr, 1)).map((m: any) => (
                                <div key={m.id} className={`text-[10px] sm:text-xs font-black uppercase tracking-wider px-3 py-2 rounded-xl flex justify-between items-center border ${t.cardInner} ${t.textMain} ${t.borderAccent}`}>
                                  <span className="truncate pr-2">• {m.text}</span>
-                                 <button onClick={() => updateBrainFirebase({ customMissions: brain.customMissions.filter(task => task.id !== m.id) })} className={`transition-colors tap-effect ${t.textMuted} hover:text-red-500 shrink-0`}><Trash2 size={12} className="sm:size-3 stroke-[3]" /></button>
+                                 <button onClick={() => updateBrainFirebase({ customMissions: brain.customMissions.filter((task: any) => task.id !== m.id) })} className={`transition-colors tap-effect ${t.textMuted} hover:text-red-500 shrink-0`}><Trash2 size={12} className="sm:size-3 stroke-[3]" /></button>
                                </div>
                             ))}
                           </div>
@@ -2771,7 +3545,7 @@ export default function App() {
                          <>
                            <div className={`text-[9px] sm:text-[10px] font-black uppercase tracking-widest mb-2 sm:mb-3 border-t pt-3 sm:pt-4 ${t.textAccent} ${t.borderAccent} opacity-80`}>PIN SYLLABUS TARGET</div>
                            <div className="space-y-1.5 sm:space-y-2 max-h-32 overflow-y-auto hide-scrollbar pr-1">
-                             {brain.stagingTopics.slice(0, 3).map((topic, idx) => (
+                             {brain.stagingTopics.slice(0, 3).map((topic: any, idx: any) => (
                                <button key={topic.id} onClick={() => {
                                    const items = [...brain.stagingTopics]; const clickedItem = items.splice(idx, 1)[0]; items.unshift(clickedItem);
                                    updateBrainFirebase({ stagingTopics: items });
@@ -2791,7 +3565,7 @@ export default function App() {
               {/* Second Brain Bottom Nav */}
               <div className={`fixed bottom-0 left-0 w-full border-t-2 z-50 overflow-hidden backdrop-blur-xl ${t.header} ${t.borderAccent}`}>
                 <div className="max-w-2xl mx-auto grid grid-cols-6 px-1 py-1.5 sm:py-2.5 pb-[calc(env(safe-area-inset-bottom,0px)+6px)]">
-                  {[{ id: 'dashboard', icon: CalendarIcon, label: 'MISSION' }, { id: 'study', icon: Activity, label: 'QUEUE' }, { id: 'history', icon: History, label: 'HISTORY' }, { id: 'wisdom', icon: Folder, label: 'WISDOM' }, { id: 'vault', icon: BrainCircuit, label: 'DUMP' }, { id: 'urge', icon: ShieldAlert, label: 'URGE' }].map(tab => (
+                  {[{ id: 'dashboard', icon: CalendarIcon, label: 'MISSION' }, { id: 'study', icon: Activity, label: 'QUEUE' }, { id: 'history', icon: History, label: 'HISTORY' }, { id: 'wisdom', icon: Folder, label: 'WISDOM' }, { id: 'vault', icon: BrainCircuit, label: 'DUMP' }, { id: 'urge', icon: ShieldAlert, label: 'URGE' }].map((tab: any) => (
                     <button key={tab.id} onClick={() => setBrainTab(tab.id)} className={`flex flex-col items-center justify-center gap-0.5 sm:gap-1 py-1 px-0.5 rounded-xl transition-all duration-300 tap-effect ${brainTab === tab.id ? t.textAccent + ' bg-current/10 shadow-lg shadow-current/10' : t.textMuted + ' hover:' + t.textMain + ' hover:bg-current/5'}`}>
                       <tab.icon size={18} className={`sm:size-[22px] ${brainTab === tab.id ? 'stroke-[2.5]' : 'stroke-2'}`} />
                       <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-wider truncate max-w-full">{tab.label}</span>
@@ -2801,6 +3575,8 @@ export default function App() {
               </div>
             </>
           )}
+
+          {appMode === 'krishna' && renderMyKrishna()}
         </div>
       </div>
     </div>
